@@ -1,7 +1,7 @@
 import pygame
 
 
-class Player(pygame.sprite.Sprite):
+class Player():
 	# # # # # # # # # # # # # #
 	# Player class
 	# # # # # # # # # # # # # #
