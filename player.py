@@ -1,7 +1,7 @@
 import pygame
 
-
-class Player():
+# TODO add image
+class Player(pygame.sprite.Sprite):
 	# # # # # # # # # # # # # #
 	# Player class
 	# # # # # # # # # # # # # #
@@ -14,6 +14,7 @@ class Player():
     movementDirections = ["UP", "DOWN", "LEFT", "RIGHT"]
 
     def __init__(self, display, name, pace, position=()):
+        pygame.sprite.Sprite.__init__(self)
         self.name = name
         self.display = display
         # TODO: make player size variable

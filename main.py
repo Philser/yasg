@@ -5,7 +5,7 @@ import eventHandler
 
 class App:
 
-    GAME_RUNNING = False
+    gameRunning = False
     DISPLAY = None
     player = None
     background = None
@@ -32,15 +32,23 @@ class App:
 
         self.clock = pygame.time.Clock()
 
-        self.GAME_RUNNING = True
+        self.gameRunning = True
 
     # TODO: add background blit -- maybe via surfaceList?
     def main(self):
-        while self.GAME_RUNNING:
+
+        allSprites = pygame.sprite.RenderPlain((self.player))
+
+        while self.gameRunning:
             self.clock.tick(60)
             pygame.display.flip()
 
             self.eventHandler.handle_events(pygame.event.get(), pygame.key.get_pressed())
+            self.gameRunning = not self.eventHandler.received_quit_event()
+
+            allSprites.update()
+            self.DISPLAY.blit(self.background, (0,0))
+            allSprites.draw(self.DISPLAY)
 
 
 app = App(800, 600)

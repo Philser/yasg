@@ -5,12 +5,12 @@ from pygame import locals
 class EventHandler:
 
     player = None
+    receivedQuitEvent = False
 
     def __init__(self, player):
         self.player = player
         pass
 
-    # TODO: handle QUIT event
     def handle_events(self, eventList, keys):
 
         # Player movement
@@ -22,11 +22,12 @@ class EventHandler:
             self.player.move("RIGHT")
         elif keys[pygame.K_LEFT]:
             self.player.move("LEFT")
-        #elif keys[pygame.K_ESCAPE]:
+        elif keys[pygame.K_ESCAPE]:
+            self.receivedQuitEvent = True
 
         for event in eventList:
             if event.type == pygame.QUIT:
-                return
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    return
+                self.receivedQuitEvent = True
+
+    def received_quit_event(self):
+        return self.receivedQuitEvent
