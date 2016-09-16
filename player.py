@@ -1,13 +1,13 @@
 import pygame
+import os
 
-# TODO add image
+##
+# The player
+##
 class Player(pygame.sprite.Sprite):
-	# # # # # # # # # # # # # #
-	# Player class
-	# # # # # # # # # # # # # #
-	
+
     name = ""
-    appearance = None
+    rect = None
     pace = 0
     display = None
 
@@ -18,28 +18,24 @@ class Player(pygame.sprite.Sprite):
         self.name = name
         self.display = display
         # TODO: make player size variable
-        self.appearance = pygame.Rect(position, (20, 30))
+        self.image = pygame.image.load("/home/phil/yasg/assets/player/player_model_small.png")
+        self.rect = self.image.get_rect()
         self.pace = pace
-
-    def draw(self):
-        pygame.draw.rect(self.display, (0, 0, 0), self.appearance)
 
     def move(self, direction):
         if direction in self.movementDirections:
             if direction == "UP":
-                if self.appearance.top > 0:
-                    self.appearance = self.appearance.move(0, -self.pace)
+                if self.rect.top > 0:
+                    self.rect = self.rect.move(0, -self.pace)
             elif direction == "DOWN":
-                if self.appearance.bottom < self.display.get_height():
-                    self.appearance = self.appearance.move(0, self.pace)
+                if self.rect.bottom < self.display.get_height():
+                    self.rect = self.rect.move(0, self.pace)
             elif direction == "RIGHT":
-                if self.appearance.right < self.display.get_width():
-                    self.appearance = self.appearance.move(self.pace, 0)
+                if self.rect.right < self.display.get_width():
+                    self.rect = self.rect.move(self.pace, 0)
             elif direction == "LEFT":
-                if self.appearance.left > 0:
-                    self.appearance = self.appearance.move(-self.pace, 0)
-
-        self.draw()
+                if self.rect.left > 0:
+                    self.rect = self.rect.move(-self.pace, 0)
 
     def set_pace(self, pace):
         self.pace = pace
