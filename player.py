@@ -13,16 +13,15 @@ class Player(pygame.sprite.Sprite):
 
     movementDirections = ["UP", "DOWN", "LEFT", "RIGHT"]
 
-    def __init__(self, display, name, pace, position=()):
+    def __init__(self, display, pace):
         pygame.sprite.Sprite.__init__(self)
-        self.name = name
         self.display = display
         # TODO: make player size variable
-        self.image = pygame.image.load("/home/phil/yasg/assets/player/player_model_small.png")
+        self.image = pygame.image.load("/home/phil/PycharmProjects/yasg/assets/player/player_model_small.png")
         self.rect = self.image.get_rect()
         self.pace = pace
 
-    def move(self, direction):
+    def move(self, direction, blockList):
         if direction in self.movementDirections:
             if direction == "UP":
                 if self.rect.top > 0:

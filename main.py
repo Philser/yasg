@@ -33,7 +33,7 @@ class App:
         self.updatedSprites.add(self.worldBlocks)
         
         # init player
-        self.player = player.Player(self.DISPLAY, "John Doe", 2, (0, 0))
+        self.player = player.Player(self.DISPLAY, 2)
        
         self.updatedSprites.add(self.player)
 
