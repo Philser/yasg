@@ -10,10 +10,12 @@ class EventHandler:
     receivedQuitEvent = False
     updatedSprites = ()
 
-    def __init__(self, player, world):
+    def __init__(self, player, world, blockList, display):
         self.player = player
         self.world = world
         self.updatedSprites = pygame.sprite.OrderedUpdates()
+        self.blockList = blockList
+        self.display = display
 
     def handle_events(self, eventList, keys):
         self.updatedSprites.empty()
@@ -26,13 +28,13 @@ class EventHandler:
                 self.player.move("UP", self.display)
         elif keys[pygame.K_DOWN]:
             if self.can_move_player(self.player.rect.left, self.player.rect.top + self.player.pace):
-                self.player.move("DOWN")
+                self.player.move("DOWN", self.display)
         elif keys[pygame.K_RIGHT]:
             if self.can_move_player(self.player.rect.left + self.player.pace, self.player.rect.top):
-                self.player.move("RIGHT")
+                self.player.move("RIGHT", self.display)
         elif keys[pygame.K_LEFT]:
             if self.can_move_player(self.player.rect.left - self.player.pace, self.player.rect.top):
-                self.player.move("LEFT")
+                self.player.move("LEFT", self.display)
         else:
             playerUpdated = False
 
@@ -53,7 +55,7 @@ class EventHandler:
         test_rect.left = new_x
         test_rect.top = new_y
 
-        for block in self.world.blocklist:
+        for block in self.blockList:
             if test_rect.colliderect(block.rect):
                 return False
         return True

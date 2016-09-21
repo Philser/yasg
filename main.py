@@ -28,17 +28,18 @@ class App:
 
         # init world
         # TODO: Get rid of "worldBlocks"
-        self.world = world.World()
-        self.worldBlocks = self.world.generate(self.DISPLAY)
+        self.world = world.World("world001")
+        self.worldBlocks = self.world.generateBlocklist()
         self.updatedSprites.add(self.worldBlocks)
         
         # init player
-        self.player = player.Player(self.DISPLAY, 2)
+        # TODO: figure out how to solve image != sprite
+        self.player = self.world.generatePlayer()
        
         self.updatedSprites.add(self.player)
 
  		# init event handler
-        self.eventHandler = eventHandler.EventHandler(self.player, self.world)
+        self.eventHandler = eventHandler.EventHandler(self.player, self.world, self.worldBlocks, self.DISPLAY)
 
         self.clock = pygame.time.Clock()
 

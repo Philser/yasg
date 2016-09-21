@@ -1,37 +1,49 @@
 import pygame
-import world_block
-import random
+import player
 
 ##
 # Class that generates the game world
 ##
 
 # For now it generates the world on a random basis
-# TODO: Generate by means of a plan
 class World:
-	blocklist = None
 
-	def __init__(self):
-		pass
+    def __init__(self, worldName):
+        self.worldName = worldName
+        self.world = None
 
-	def generate(self, display):
-		self.blocklist = pygame.sprite.OrderedUpdates()
-		
-		for i in range(1, 11):
-			block = world_block.WorldBlock()
-			# TODO: add random value calculation in bounds of display
-			rand_x = random.randrange(0, display.get_width())
-			rand_y = random.randrange(0, display.get_height())
-			block.rect.left = rand_x
-			block.rect.top = rand_y
-			self.blocklist.add(block)
+        if worldName == "world001":
+            import world001
+            self.world = world001.World()
+            self.worldSprites = self.world.getSprites()
+            self.worldMap = self.world.getWorld()
 
-		return self.blocklist
+    def generateBlocklist(self):
+        blockSprite = self.worldSprites[self.world.BLOCK]
+        blocklist = pygame.sprite.OrderedUpdates()
 
-	def getObjectForTopLeftPos(self, x, y):
-		for block in self.blocklist:
-			if block.rect.left == x and block.rect.top == y:
-				return block
-			else:
-				return None
-		
+        # TODO:
+        # TODO: get rid of hardcoded block width and height
+        for column in range(0, len(self.worldMap)):
+            for line in range(0, len(self.worldMap[column])):
+                if self.worldMap[column][line] == self.world.BLOCK:
+                    print "Found a Block!"
+                    # Test
+                    newBlock = pygame.sprite.Sprite()
+                    newBlock.image = blockSprite.image
+                    newBlock.rect = newBlock.image.get_rect()
+                    newBlock.rect.top = column * 20 + 1
+                    newBlock.rect.left = line * 12 + 1
+                    blocklist.add(newBlock)
+
+        return blocklist
+
+    def generatePlayer(self):
+        newPlayer = self.worldSprites[self.world.PLAYER]
+        for columns in range(0, len(self.worldMap)):
+            for lines in range(0, len(self.worldMap[columns])):
+                if lines == self.world.PLAYER:
+                    newPlayer.rect.left = lines * 12  # +1 for better optics. ADD BORDER TO SPRITE!
+                    newPlayer.rect.top = columns * 10
+
+        return newPlayer
