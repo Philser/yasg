@@ -16,12 +16,10 @@ class World:
                  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
         return world
 
-    def getSprites(self):
-        playerSprite = player.Player(2)
-        playerSprite.image = pygame.image.load("assets/player/player_model_small.png")
-        playerSprite.rect = playerSprite.image.get_rect()
-        blockSprite = pygame.sprite.Sprite()
-        blockSprite.image = pygame.image.load("assets/world/block.png")
-        blockSprite.rect = blockSprite.image.get_rect()
+    def getImages(self):
+        playerImage = pygame.image.load("assets/player/player_model_small.png")
 
-        return [blockSprite, playerSprite]
+        blockImage = pygame.image.load("assets/world/block.png")
+
+
+        return [blockImage, playerImage]

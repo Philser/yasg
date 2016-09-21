@@ -15,6 +15,9 @@ class App:
     updatedSprites = None
 
     # TODO: keep a list of sprites that have to be drawn every time smth is updated (like world and background)
+    # TODO: Make world use whole display
+    # TODO: Draw blocks on background once and then save that image for reuse instead of drawing each block again each time
+    # TODO: Add bad guys
     def __init__(self, screen_x, screen_y):
         pygame.init()
         self.DISPLAY = pygame.display.set_mode((screen_x, screen_y))

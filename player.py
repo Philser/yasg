@@ -13,10 +13,12 @@ class Player(pygame.sprite.Sprite):
 
     movementDirections = ["UP", "DOWN", "LEFT", "RIGHT"]
 
-    def __init__(self, pace):
+    def __init__(self, pace, image=pygame.image):
         pygame.sprite.Sprite.__init__(self)
         # TODO: make player size variable
         self.pace = pace
+        self.image = image
+        self.rect = self.image.get_rect()
 
     def move(self, direction, display):
         if direction in self.movementDirections:
