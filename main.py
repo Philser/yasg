@@ -18,6 +18,7 @@ class App:
     # TODO: Make world use whole display
     # TODO: Draw blocks on background once and then save that image for reuse instead of drawing each block again each time
     # TODO: Add bad guys
+    # TODO: Strategy pattern for their different behaviours
     def __init__(self, screen_x, screen_y):
         pygame.init()
         self.DISPLAY = pygame.display.set_mode((screen_x, screen_y))

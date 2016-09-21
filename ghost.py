@@ -3,9 +3,10 @@ import os
 
 
 ##
-# The player
+# The abstract Class for the player's enemies
 ##
-class Player(pygame.sprite.Sprite):
+class Ghost(pygame.sprite.Sprite):
+
     movementDirections = ["UP", "DOWN", "LEFT", "RIGHT"]
 
     def __init__(self, pace, image=pygame.image):
