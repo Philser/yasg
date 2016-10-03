@@ -3,9 +3,9 @@ import player
 import eventHandler
 import world
 
+
 # TODO: Change filenames to be Capitalcase
 class App:
-
     gameRunning = False
     DISPLAY = None
     player = None
@@ -17,6 +17,7 @@ class App:
     # TODO: keep a list of sprites that have to be drawn every time smth is updated (like world and background)
     # TODO: Make world use whole display
     # TODO: Draw blocks on background once and then save that image for reuse instead of drawing each block again each time
+    # TODO: keep one list holding both blocks and pellets
     # TODO: Add bad guys
     # TODO: Strategy pattern for their different behaviours
     def __init__(self, screen_x, screen_y):
@@ -35,20 +36,21 @@ class App:
         self.world = world.World("world001")
         self.worldBlocks = self.world.generateBlocklist()
         self.updatedSprites.add(self.worldBlocks)
-        
+
+        self.worldPellets = self.world.generatePelletList()
+        self.updatedSprites.add(self.worldPellets)
         # init player
-        # TODO: figure out how to solve image != sprite
         self.player = self.world.generatePlayer()
-       
+
         self.updatedSprites.add(self.player)
 
- 		# init event handler
-        self.eventHandler = eventHandler.EventHandler(self.player, self.world, self.worldBlocks, self.DISPLAY)
+        # init event handler
+        self.eventHandler = eventHandler.EventHandler(self.player, self.world, self.worldBlocks, self.worldPellets, self.DISPLAY)
 
         self.clock = pygame.time.Clock()
 
         # initial drawing
-        self.DISPLAY.blit(self.background, (0,0))
+        self.DISPLAY.blit(self.background, (0, 0))
         self.updatedSprites.draw(self.DISPLAY)
 
         self.gameRunning = True
@@ -62,10 +64,11 @@ class App:
             self.gameRunning = not self.eventHandler.received_quit_event()
 
             if self.updatedSprites:
-            	self.updatedSprites.add(self.worldBlocks)
-            	self.DISPLAY.blit(self.background, (0,0))
-            	self.updatedSprites.draw(self.DISPLAY)
+                self.updatedSprites.add(self.worldBlocks)
+                self.updatedSprites.add(self.worldPellets)
+                self.DISPLAY.blit(self.background, (0, 0))
+                self.updatedSprites.draw(self.DISPLAY)
 
 
-app = App(800, 600)
+app = App(500, 500)
 app.main()

@@ -1,13 +1,13 @@
 import pygame
 import player
 
+
 ##
 # Class that generates the game world
 ##
 
 # For now it generates the world on a random basis
 class World:
-
     def __init__(self, worldName):
         self.worldName = worldName
         self.world = None
@@ -22,28 +22,42 @@ class World:
         blockImage = self.worldImages[self.world.BLOCK]
         blocklist = pygame.sprite.OrderedUpdates()
 
-        # TODO: add a block class holding attributes like damage for future purposes
         # TODO: get rid of hardcoded block width and height
-        for column in range(0, len(self.worldMap)):
-            for line in range(0, len(self.worldMap[column])):
-                if self.worldMap[column][line] == self.world.BLOCK:
-                    print "Found a Block!"
-                    # Test
+        for line in range(0, len(self.worldMap)):
+            for column in range(0, len(self.worldMap[line])):
+                if self.worldMap[line][column] == self.world.BLOCK:
                     newBlock = pygame.sprite.Sprite()
                     newBlock.image = blockImage
                     newBlock.rect = newBlock.image.get_rect()
-                    newBlock.rect.top = column * 20 + 1
-                    newBlock.rect.left = line * 12 + 1
+                    newBlock.rect.top = line * 50  # 50 = height of block
+                    newBlock.rect.left = column * 50  # 50 = width of block
                     blocklist.add(newBlock)
 
         return blocklist
 
     def generatePlayer(self):
         newPlayer = player.Player(2, self.worldImages[self.world.PLAYER])
-        for columns in range(0, len(self.worldMap)):
-            for lines in range(0, len(self.worldMap[columns])):
-                if lines == self.world.PLAYER:
-                    newPlayer.rect.left = lines * 12  # +1 for better optics. ADD BORDER TO SPRITE!
-                    newPlayer.rect.top = columns * 10
+        for line in range(0, len(self.worldMap)):
+            for column in range(0, len(self.worldMap[line])):
+                if self.worldMap[line][column] == self.world.PLAYER:
+                    newPlayer.rect.left = column * 50
+                    newPlayer.rect.top = line * 50
 
         return newPlayer
+
+    def generatePelletList(self):
+        pelletImage = self.worldImages[self.world.PELLET]
+        pelletList = pygame.sprite.OrderedUpdates()
+
+        # TODO: get rid of hardcoded block width and height
+        for line in range(0, len(self.worldMap)):
+            for column in range(0, len(self.worldMap[line])):
+                if self.worldMap[line][column] == self.world.PELLET:
+                    newPellet = pygame.sprite.Sprite()
+                    newPellet.image = pelletImage
+                    newPellet.rect = newPellet.image.get_rect()
+                    newPellet.rect.top = line * 50  # 50 = height of block
+                    newPellet.rect.left = column * 50 + 25 # 50 = width of block
+                    pelletList.add(newPellet)
+
+        return pelletList
