@@ -34,7 +34,7 @@ class App:
         # init world
         # TODO: Get rid of "worldBlocks"
         self.world = world.World("world001")
-        self.worldBlocks = self.world.generateBlocklist()
+        self.worldBlocks = self.world.generateObstacleList()
         self.updatedSprites.add(self.worldBlocks)
 
         self.worldPellets = self.world.generatePelletList()

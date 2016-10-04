@@ -25,18 +25,13 @@ class EventHandler:
         # TODO: improve collision detection for world objects (LEFT and UP)
         playerUpdated = True
         if keys[pygame.K_UP]:
-            if self.can_move_player(self.player.rect.left, self.player.rect.top - self.player.pace):
-
-                self.player.move("UP", self.display)
+            self.player.move("UP", self.blockList, self.display)
         elif keys[pygame.K_DOWN]:
-            if self.can_move_player(self.player.rect.left, self.player.rect.top + self.player.pace):
-                self.player.move("DOWN", self.display)
+            self.player.move("DOWN", self.blockList, self.display)
         elif keys[pygame.K_RIGHT]:
-            if self.can_move_player(self.player.rect.left + self.player.pace, self.player.rect.top):
-                self.player.move("RIGHT", self.display)
+            self.player.move("RIGHT", self.blockList, self.display)
         elif keys[pygame.K_LEFT]:
-            if self.can_move_player(self.player.rect.left - self.player.pace, self.player.rect.top):
-                self.player.move("LEFT", self.display)
+            self.player.move("LEFT", self.blockList, self.display)
         else:
             playerUpdated = False
 
@@ -51,13 +46,3 @@ class EventHandler:
 
     def received_quit_event(self):
         return self.receivedQuitEvent
-
-    def can_move_player(self, new_x, new_y):
-        test_rect = self.player.rect.copy()
-        test_rect.left = new_x
-        test_rect.top = new_y
-
-        for block in self.blockList:
-            if test_rect.colliderect(block.rect):
-                return False
-        return True
