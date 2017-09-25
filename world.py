@@ -3,7 +3,7 @@ import player
 
 
 ##
-# Class that generates the game world
+# Class that generates the game world,yo
 ##
 
 # For now it generates the world on a random basis
